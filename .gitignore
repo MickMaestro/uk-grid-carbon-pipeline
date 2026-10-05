@@ -1,0 +1,33 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+.venv/
+venv/
+
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# credentials live in environment variables, never in the repo
+.env
+.env.*
+!.env.example
+
+# downloaded data and local warehouse files can always be rebuilt
+data/
+*.duckdb
+*.duckdb.wal
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

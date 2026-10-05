@@ -18,3 +18,43 @@ answer two questions:
 
 Work in progress. At the moment it downloads national carbon intensity for one day at a time and
 saves the raw response locally.
+
+## Running it
+
+You'll need Python 3.10 or later. Set up a virtual environment and install the project:
+
+```
+python -m venv .venv
+.venv\Scripts\activate
+pip install -e ".[dev]"
+```
+
+On macOS or Linux, activate it with `source .venv/bin/activate` instead.
+
+To download a day of national data:
+
+```
+carbon-ingest intensity --date 2026-10-01
+```
+
+If you leave out `--date` it fetches yesterday. The files go into
+`data/raw/national_intensity/date=2026-10-01/`. `intensity.json` is the API's response, saved
+exactly as it was sent, and `_manifest.json` records the URL, when it was fetched and how many
+half hours had an actual reading.
+
+You can fetch today as well, but the half hours that haven't happened yet will only have
+forecasts. Running the same day again later overwrites the files with the complete version.
+
+## Tests
+
+Run `pytest`. The tests use real API responses saved in `tests/fixtures`, so they don't need an
+internet connection.
+
+I use [pre-commit](https://pre-commit.com/) to lint and format code with ruff before each commit.
+Run `pre-commit install` once to set it up.
+
+## About the data
+
+My notes on the API are in [docs/sources.md](docs/sources.md). The thing that catches you out
+first is that it groups data by UK day but gives every timestamp in UTC, so the days the clocks
+change have 46 or 50 half hours rather than 48.

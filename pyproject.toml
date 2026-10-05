@@ -21,6 +21,9 @@ dev = [
     "pre-commit>=3.7",
 ]
 
+[project.scripts]
+carbon-ingest = "grid_carbon.cli:main"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 
